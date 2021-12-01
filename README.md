@@ -29,7 +29,7 @@ production deployment
     1. make prod-server
 
 # Testing
-Currently the app support two type of testing unit and integration. to run test suites open the container (go-mongo) CLI and run one of the test suite cmd below. **Test only run on test-server**
+Currently the app support two type of testing unit and integration. to run test suites open the container (go-mongo) CLI and run one of the test suite cmd below. **Integration test only run on {test, prod}-server**
 
 unit test
 
