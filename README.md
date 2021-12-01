@@ -11,13 +11,13 @@
     2. db: contains all db logic, encapsulations and abstraction
         2.1: mgdb: database layer for mongodb
 
-    3. mocks: contains all generated mocks of internal domain interface(eg. MongoQueries) 
+    3. mocks: contains all generated mocks of the internal domain interfaces(eg. MongoQueries) 
 
-    4. services: contains the business logic of the aplication
+    4. services: contains the business logic of the application
         4.1 auth: auth domain services
         4.2 api: api domain services
         
-    5. utils: contains resuable utils func 
+    5. utils: contains resuable and standalone utils func 
 
 # deployments
 development deployment
