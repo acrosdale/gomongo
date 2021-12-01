@@ -1,0 +1,35 @@
+# phase 1 build
+FROM golang:alpine AS build
+
+LABEL key="Alexander Crosdale"
+
+# set working dir
+WORKDIR /build
+
+# cp requirements file and checksum
+COPY go.mod go.sum ./
+
+# download dependencies
+RUN go mod download
+
+# cp files to image
+COPY . .
+
+# run compile
+RUN GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64 \
+    go build -o /bin/app .
+
+# phase 2
+FROM scratch
+
+# set working
+WORKDIR /build
+
+# cp executable
+COPY --from=build /bin/app /main
+
+# run executable
+ENTRYPOINT ["/main"]

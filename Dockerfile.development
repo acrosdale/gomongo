@@ -1,0 +1,27 @@
+# phase 1 build
+FROM golang:1.16
+
+LABEL key="Alexander Crosdale"
+
+# set working dir
+WORKDIR /app
+
+# cp requirements file and checksum
+COPY go.mod go.sum ./
+
+# install live server reloader pkg. DEV ONLY dependency
+RUN go get github.com/codegangsta/gin
+
+# used for generating and updating mocks. DEV ONLY dependency
+RUN go get github.com/vektra/mockery/v2
+
+# download dependencies
+RUN go mod download
+
+# cp files to image
+COPY . .
+
+EXPOSE 8080
+
+# run executable
+CMD ["gin","-i","-a","8080","run", "main.go"]
