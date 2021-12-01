@@ -1,9 +1,5 @@
 # Description
  A golang project that implements a simple product catalog system. Users can do crud operation via the ReST APIs.
-
-# Future Work
-    1. Add user ID to the product table to enforce ownership of uploaded catalog.
-
 # Internal Components
     1. controllers: contains the endpoint that process all the incoming requests
         1.1. api
@@ -74,3 +70,6 @@ A  Product
 | /api/v1/products/ :id | DELETE | delete a product                                                
 |/api/v1/products/ :id | PUT | update a product                                                                                       |
 
+
+# Future Work
+    1. Add user ID to the product table to enforce ownership of uploaded catalog.
