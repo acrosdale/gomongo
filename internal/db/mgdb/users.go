@@ -72,7 +72,7 @@ func createUserCollection(mgdb *mongo.Database) error {
 	return nil
 }
 
-func (handler MongoQuery) FindOneUser(ctx context.Context, filter interface{}, opts ...*options.FindOneOptions) (User, error) {
+func (handler *MongoQuery) FindOneUser(ctx context.Context, filter interface{}, opts ...*options.FindOneOptions) (User, error) {
 	var user User
 
 	result := handler.Mgdb.Collection(usercollection).FindOne(ctx, filter, opts...)
@@ -90,7 +90,7 @@ func (handler MongoQuery) FindOneUser(ctx context.Context, filter interface{}, o
 	return user, nil
 }
 
-func (handler MongoQuery) InsertOneUser(ctx context.Context, document interface{}, opts ...*options.InsertOneOptions) (string, error) {
+func (handler *MongoQuery) InsertOneUser(ctx context.Context, document interface{}, opts ...*options.InsertOneOptions) (string, error) {
 	result, err := handler.Mgdb.Collection(usercollection).InsertOne(ctx, document, opts...)
 
 	if err != nil {

@@ -18,13 +18,23 @@ const LOG_FORMAT_XCOR_ID = `${time_rfc3339_nano} ${remote_ip} ${header:X-Correla
 	`${status} ${error} ${latency_human}` + "\n"
 
 // settings sub struct for a db
-type DbConfig struct {
-	Dbtype string `env:"DB_TYPE" env-default:"mongodb"`
+type Mgdb struct {
 	DBHost string `env:"DB_HOST" env-default:"localhost"`
 	DBPort string `env:"DB_PORT" env-default:"-"`
 	DBName string `env:"DB_NAME" env-default:"gomongo"`
 	DBUser string `env:"DB_USER" env-default:"root"`
 	DBPass string `env:"DB_PASS" env-default:"example"`
+}
+type Pgdb struct {
+	DBHost string `env:"POSTGRES_HOST" env-default:"db"`
+	DBPort string `env:"POSTGRES_PORT" env-default:"5432"`
+	DBName string `env:"POSTGRES_DB" env-default:"gomongo"`
+	DBUser string `env:"POSTGRES_USER" env-default:"root"`
+	DBPass string `env:"POSTGRES_PASSWORD" env-default:"example"`
+}
+type DbConfig struct {
+	Mgdb Mgdb
+	Pgdb Pgdb
 }
 
 // a settings sub struct for app related config

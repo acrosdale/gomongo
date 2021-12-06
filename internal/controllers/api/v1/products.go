@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/acrosdale/gomongo/configs"
 	"github.com/acrosdale/gomongo/internal/db/mgdb"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
@@ -30,7 +29,7 @@ func bindProductsRoutingV1(apiV1Group *echo.Group, handler ApiInterfaceV1) {
 	productsAPI := apiV1Group.Group("/products")
 
 	// use the jwt middleware
-	productsAPI.Use(configs.JwtMiddleware)
+	// productsAPI.Use(configs.JwtMiddleware)
 
 	// PRODUCTS ENDPOINTS
 	productsAPI.GET("/:id", handler.getProductAPI)

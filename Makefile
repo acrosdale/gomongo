@@ -35,4 +35,15 @@ update-service-mocks:
 
 # remock ALL tracked mock with updates
 update-mocks: update-service-mocks update-database-mocks
-	
+
+#	DATABASE FUNCATIONALITY
+migrate-pgdb:
+	go run internal/cmd/bun/migration_cli.go -env=test db init
+	go run internal/cmd/bun/migration_cli.go -env=test db migrate
+
+rollback-pgdb:
+	go run internal/cmd/bun/migration_cli.go -env=test db rollback
+
+create-sql-migration-pgdb:
+	go run internal/cmd/bun/migration_cli.go -env=test db init
+	go run internal/cmd/bun/migration_cli.go -env=test db create_sql $(f)

@@ -14,7 +14,9 @@ services:
       - "8080:8080"
     volumes: 
       - ../:/app
-
+    networks:
+      - db_nw
+      - nosql_db_nw
 
   mongo:
     image: mongo
@@ -24,6 +26,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
       - 27017:27017
+    networks:
+      - nosql_db_nw
 
   mongo-express:
     image: mongo-express
@@ -34,3 +38,29 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+    networks:
+      - nosql_db_nw
+
+  db:
+    image: postgres:14
+    restart: always
+    env_file: 
+      - ../configs/dev.env
+    networks:
+      - db_nw
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8090:8080
+    networks:
+      - db_nw
+
+networks:
+  nosql_db_nw:
+    driver: bridge
+  db_nw:
+    driver: bridge
+  web_nw:
+    driver: bridge

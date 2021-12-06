@@ -5,12 +5,12 @@ package apiservice
 import (
 	"context"
 	"fmt"
-	"log"
 	"testing"
 
 	"github.com/acrosdale/gomongo/configs"
 	"github.com/acrosdale/gomongo/internal/db"
 	"github.com/acrosdale/gomongo/internal/db/mgdb"
+	"github.com/labstack/gommon/log"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"go.mongodb.org/mongo-driver/bson/primitive"

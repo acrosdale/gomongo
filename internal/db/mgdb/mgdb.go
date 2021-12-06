@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 
 	"github.com/acrosdale/gomongo/configs"
+	"github.com/labstack/gommon/log"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
@@ -37,7 +37,7 @@ var (
 )
 
 // NewMongoHandler return a NewMongoHandler given the db configs. NewMongoHandler abstact the mongo db layer
-func NewMongoHandler(cfg configs.DbConfig) (MongoHandler, error) {
+func NewMongoHandler(cfg configs.Mgdb) (MongoHandler, error) {
 	// create the mongo client
 	mongoclient, err := newMongoClient(cfg)
 	if err != nil {
@@ -50,7 +50,7 @@ func NewMongoHandler(cfg configs.DbConfig) (MongoHandler, error) {
 	createProductsCollection(mgdb)
 	createUserCollection(mgdb)
 
-	var queryhandler MongoQueries = MongoQuery{
+	var queryhandler MongoQueries = &MongoQuery{
 		Mgdb: mgdb,
 	}
 
@@ -61,11 +61,17 @@ func NewMongoHandler(cfg configs.DbConfig) (MongoHandler, error) {
 }
 
 // newMongoClient return a mongo client given the db configs
-func newMongoClient(cfg configs.DbConfig) (*mongo.Client, error) {
+func newMongoClient(cfg configs.Mgdb) (*mongo.Client, error) {
 	var err error
 
 	// define conn URI
-	connectURI := fmt.Sprintf("mongodb://%s:%s@%s:%s/", cfg.DBUser, cfg.DBPass, cfg.DBHost, cfg.DBPort)
+	connectURI := fmt.Sprintf(
+		"mongodb://%s:%s@%s:%s/",
+		cfg.DBUser,
+		cfg.DBPass,
+		cfg.DBHost,
+		cfg.DBPort,
+	)
 
 	// init mongo client
 	mongoClient, err := mongo.NewClient(options.Client().ApplyURI(connectURI))
@@ -87,7 +93,7 @@ func newMongoClient(cfg configs.DbConfig) (*mongo.Client, error) {
 }
 
 // CloseMongoHandler closes the mongo client define in the MongoHandler
-func CloseMongoHandler(mongo_handler MongoHandler) (bool, error) {
+func (mongo_handler *MongoHandler) CloseMongoHandler() (bool, error) {
 	err := mongo_handler.mongoClient.Disconnect(context.Background())
 
 	if err != nil {

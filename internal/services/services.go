@@ -1,11 +1,10 @@
 package services
 
 import (
-	"log"
-
 	db "github.com/acrosdale/gomongo/internal/db"
 	apiservice "github.com/acrosdale/gomongo/internal/services/api"
 	authservice "github.com/acrosdale/gomongo/internal/services/auth"
+	"github.com/labstack/gommon/log"
 )
 
 /*

@@ -61,7 +61,7 @@ func createProductsCollection(mgdb *mongo.Database) error {
 	return nil
 }
 
-func (handler MongoQuery) FindOneProduct(ctx context.Context, filter interface{}, opts ...*options.FindOneOptions) (Product, error) {
+func (handler *MongoQuery) FindOneProduct(ctx context.Context, filter interface{}, opts ...*options.FindOneOptions) (Product, error) {
 	var product Product
 
 	result := handler.Mgdb.Collection(productcollection).FindOne(ctx, filter, opts...)
@@ -79,7 +79,7 @@ func (handler MongoQuery) FindOneProduct(ctx context.Context, filter interface{}
 	return product, nil
 }
 
-func (handler MongoQuery) InsertOneProduct(ctx context.Context, document interface{}, opts ...*options.InsertOneOptions) (string, error) {
+func (handler *MongoQuery) InsertOneProduct(ctx context.Context, document interface{}, opts ...*options.InsertOneOptions) (string, error) {
 
 	result, err := handler.Mgdb.Collection(productcollection).InsertOne(ctx, document, opts...)
 
@@ -91,7 +91,7 @@ func (handler MongoQuery) InsertOneProduct(ctx context.Context, document interfa
 	return result.InsertedID.(primitive.ObjectID).Hex(), nil
 }
 
-func (handler MongoQuery) DeleteOneProduct(ctx context.Context, filter interface{}, opts ...*options.DeleteOptions) (int64, error) {
+func (handler *MongoQuery) DeleteOneProduct(ctx context.Context, filter interface{}, opts ...*options.DeleteOptions) (int64, error) {
 
 	result, err := handler.Mgdb.Collection(productcollection).DeleteOne(ctx, filter, opts...)
 
@@ -103,7 +103,7 @@ func (handler MongoQuery) DeleteOneProduct(ctx context.Context, filter interface
 	return result.DeletedCount, nil
 }
 
-func (handler MongoQuery) UpdateOneProduct(ctx context.Context, filters interface{}, document interface{}, opts ...*options.UpdateOptions) (int64, error) {
+func (handler *MongoQuery) UpdateOneProduct(ctx context.Context, filters interface{}, document interface{}, opts ...*options.UpdateOptions) (int64, error) {
 
 	update := bson.D{{Key: "$set", Value: document}}
 	result, err := handler.Mgdb.Collection(productcollection).UpdateOne(ctx, filters, update, opts...)
